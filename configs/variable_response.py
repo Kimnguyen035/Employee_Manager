@@ -11,7 +11,7 @@ ERROR = {
 }
 
 SUCCESS = {
-    'create_employee':'Post was created',
+    'create_employee':'Employee was created',
     'update_post':'Post was edited.',
     'deleted_post': 'Post was deleted',
     'restore_post': 'Post was restored',

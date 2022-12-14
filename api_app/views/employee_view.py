@@ -16,7 +16,7 @@ class EmployeeView(ViewSet):
         return True, validate.data['data']
     
     def get_detail(self, request, id):
-        status, data = self.get_post_data(id)
+        status, data = self.get_data(id)
         if status:
             return response_data(data)
         return response_data(message=ERROR['not_exists_employee'])
@@ -26,4 +26,5 @@ class EmployeeView(ViewSet):
         post_save = EmployeeSerializer(data=data)
         if not post_save.is_valid():
             return validate_error(post_save.errors)
+        post_save.save()
         return response_data(message=SUCCESS['create_employee'], data=post_save.data)
