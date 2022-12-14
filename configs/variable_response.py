@@ -8,12 +8,13 @@ STATUS = {
 ERROR = {
     'not_exists': ' does not exist',
     'not_exists_employee': 'Employee does not exist.',
+    'not_exists_trash': 'The employee does not exist in the trash.',
 }
 
 SUCCESS = {
     'create_employee':'Employee was created',
-    'update_post':'Post was edited.',
-    'deleted_post': 'Post was deleted',
-    'restore_post': 'Post was restored',
-    'drop_post': 'Post was dropped',
+    'update_employee':'Employee was edited.',
+    'deleted_employee': 'Employee was deleted',
+    'restore_employee': 'Employee was restored',
+    'drop_employee': 'Employee was dropped',
 }
