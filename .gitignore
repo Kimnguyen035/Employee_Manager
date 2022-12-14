@@ -1,0 +1,10 @@
+api_app/__pycache__/
+api_app/models/__pycache__/
+api_app/serializers/__pycache__/
+api_app/views/__pycache__/
+api_app/validations/__pycache__/
+api_app/migrations/__pycache__/
+helpers/__pycache__/
+configs/__pycache__/
+employee_manager/__pycache__/
+venv/
