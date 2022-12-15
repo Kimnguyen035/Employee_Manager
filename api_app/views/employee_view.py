@@ -17,10 +17,24 @@ class EmployeeView(ViewSet):
         return True, validate.data['data']
     
     def get_detail(self, request, id):
-        status, data = self.get_data(id)
-        if status:
-            return response_data(data)
-        return response_data(message=ERROR['not_exists_employee'])
+        validate = IdGetEmployeeValidate(data={'id':id})
+        if not validate.is_valid():
+            return validate_error(validate.errors)
+        queryset = Employee.objects.get(id=validate.data['id'])
+        serializer = EmployeeSerializer(queryset)
+        return response_data(data=serializer.data)
+    
+    # def create(self, request):
+    #     data = request.data.copy()
+    #     post_save = EmployeeSerializer(data=data)
+    #     if not post_save.is_valid():
+    #         return validate_error(post_save.errors)
+    #     data = post_save.data
+    #     for item in post_save:
+            
+        
+    #     post_save.save()
+    #     return self.get_detail(request=request, id=post_save.data['id'])
     
     def create(self, request):
         data = request.data.copy()
@@ -28,7 +42,22 @@ class EmployeeView(ViewSet):
         if not post_save.is_valid():
             return validate_error(post_save.errors)
         post_save.save()
-        return response_data(message=SUCCESS['create_employee'], data=post_save.data)
+        user_id = post_save.data['id']
+        validate = ListTelephoneValidate(data=data)
+        if not validate.is_valid():
+            return validate_error(validate.errors)
+        data =  validate.data.copy()
+        list_phone = []
+        for item in data['phone_number']:
+            list_phone.append({
+                'employee': user_id,
+                'phone':item
+            })
+        data_save = TelephoneSerializer(data=list_phone, many=True)
+        if not data_save.is_valid():
+            return validate_error(data_save.errors)
+        data_save.save()
+        return self.get_detail(request=request, id=user_id)
     
     def edit(self, request, id):
         data = request.data.copy()
