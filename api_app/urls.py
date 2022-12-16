@@ -17,5 +17,7 @@ urlpatterns = [
     
     # telephone
     path('get-all-phone', TelephoneView.as_view({'get':'all_phone'})),
+    path('detail-phone/<int:pk>', TelephoneView.as_view({'get':'all_phone'})),
     path('create-phone', TelephoneView.as_view({'post':'create_phone'})),
+    path('edit-phone/<int:id>', TelephoneView.as_view({'put':'edit_phone'})),
 ]

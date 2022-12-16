@@ -17,4 +17,5 @@ SUCCESS = {
     'deleted_employee': 'Employee was deleted',
     'restore_employee': 'Employee was restored',
     'drop_employee': 'Employee was dropped',
+    'update_phone': 'Phone was updated',
 }

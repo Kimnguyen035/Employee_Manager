@@ -1,9 +1,4 @@
-from rest_framework.viewsets import ViewSet
-from helpers.response import *
-from ..serializers.employee_serializer import *
-from ..validations.employee_validate import *
-from datetime import datetime
-
+from .views import *
 class EmployeeView(ViewSet):
     def get_all(self, request):
         queryset = Employee.objects.filter(deleted_at__isnull=True)
@@ -61,10 +56,10 @@ class EmployeeView(ViewSet):
     
     def edit(self, request, id):
         data = request.data.copy()
-        status, data_id = self.get_data(id)
-        if not status:
-            return response_data(message=ERROR['not_exists_employee'],status=STATUS['NO_DATA'])
-        queryset = Employee.objects.get(id=data_id['id'])
+        validate = IdGetEmployeeValidate(data={'id':id})
+        if not validate.is_valid():
+            return validate_error(validate.errors,STATUS['NO_DATA'])
+        queryset = Employee.objects.get(id=validate.data['id'])
         data_save = EmployeeSerializer(queryset, data=data, partial=True)
         if not data_save.is_valid():
             return validate_error(data_save.errors, STATUS['FAIL_REQUEST'])
@@ -73,10 +68,12 @@ class EmployeeView(ViewSet):
     
     def delete(self, request, id):
         data = request.data.copy()
-        status, data_id = self.get_data(id)
-        if not status or data_id['deleted_at'] is not None:
+        validate = IdGetEmployeeValidate(data={'id':id})
+        if not validate.is_valid():
+            return validate_error(validate.errors,STATUS['NO_DATA'])
+        delete_data = Employee.objects.get(id=validate.data['id'])
+        if delete_data.deleted_at is not None:
             return response_data(message=ERROR['not_exists_employee'],status=STATUS['NO_DATA'])
-        delete_data = Employee.objects.get(id=data_id['id'])
         delete_data.deleted_at = datetime.now()
         delete_data.save()
         return response_data(message=SUCCESS['deleted_employee'])
@@ -88,18 +85,21 @@ class EmployeeView(ViewSet):
     
     def restore(self, request, id):
         data = request.data.copy()
-        status, data_id = self.get_data(id)
-        if not status or data_id['deleted_at'] is None:
+        validate = IdGetEmployeeValidate(data={'id':id})
+        if not validate.is_valid():
+            return validate_error(validate.errors,STATUS['NO_DATA'])
+        restore_data = Employee.objects.get(id=validate.data['id'])
+        if restore_data.deleted_at is None:
             return response_data(message=ERROR['not_exists_trash'],status=STATUS['NO_DATA'])
-        restore_data = Employee.objects.get(id=data_id['id'])
         restore_data.deleted_at = None
         restore_data.save()
-        return response_data(message=SUCCESS['restore_employee'])
+        serializer = EmployeeSerializer(restore_data)
+        return response_data(message=SUCCESS['restore_employee'], data=serializer.data)
     
     def drop(self, request, id):
         data = request.GET.copy()
-        status, data_id = self.get_data(id)
-        if not status:
-            return response_data(message=ERROR['not_exists_post'],status=STATUS['NO_DATA'])
-        Employee.objects.get(id=data_id['id']).delete()
+        validate = IdGetEmployeeValidate(data={'id':id})
+        if not validate.is_valid():
+            return validate_error(validate.errors,STATUS['NO_DATA'])
+        Employee.objects.get(id=validate.data['id']).delete()
         return response_data(message=SUCCESS['drop_employee'])

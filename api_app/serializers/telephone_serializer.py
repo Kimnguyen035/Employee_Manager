@@ -4,6 +4,7 @@ from ..models.telephone import *
 from configs.variable_response import *
 
 class TelephoneSerializer(serializers.ModelSerializer, ActionSerializer):
+    phone = serializers.CharField()
     
     class Meta:
         model = Telephone
