@@ -1,4 +1,5 @@
 from .views import *
+
 class EmployeeView(ViewSet):
     def get_all(self, request):
         queryset = Employee.objects.filter(deleted_at__isnull=True)
@@ -72,8 +73,8 @@ class EmployeeView(ViewSet):
         if not validate.is_valid():
             return validate_error(validate.errors,STATUS['NO_DATA'])
         delete_data = Employee.objects.get(id=validate.data['id'])
-        if delete_data.deleted_at is not None:
-            return response_data(message=ERROR['not_exists_employee'],status=STATUS['NO_DATA'])
+        # if delete_data.deleted_at is not None:
+        #     return response_data(message=SUCCESS['not_exists_employee'], status=STATUS['NO_DATA'])
         delete_data.deleted_at = datetime.now()
         delete_data.save()
         return response_data(message=SUCCESS['deleted_employee'])
@@ -89,8 +90,8 @@ class EmployeeView(ViewSet):
         if not validate.is_valid():
             return validate_error(validate.errors,STATUS['NO_DATA'])
         restore_data = Employee.objects.get(id=validate.data['id'])
-        if restore_data.deleted_at is None:
-            return response_data(message=ERROR['not_exists_trash'],status=STATUS['NO_DATA'])
+        # if restore_data.deleted_at is not None:
+        #     return response_data(message=SUCCESS['not_exists_trash'], status=STATUS['NO_DATA'])
         restore_data.deleted_at = None
         restore_data.save()
         serializer = EmployeeSerializer(restore_data)

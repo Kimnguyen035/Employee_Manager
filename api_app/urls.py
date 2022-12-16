@@ -3,6 +3,7 @@ from .views.employee_view import *
 from .views.telephone_view import *
 
 urlpatterns = [
+    # employee
     path('get-all', EmployeeView.as_view({'get':'get_all'})),
     path('get-detail/<int:id>', EmployeeView.as_view({'get':'get_detail'})),
     path('get-trash', EmployeeView.as_view({'get':'get_trash'})),
