@@ -79,7 +79,7 @@ class EmployeeView(ViewSet):
         #     return response_data(message=SUCCESS['not_exists_employee'], status=STATUS['NO_DATA'])
         delete_data.deleted_at = datetime.now()
         delete_data.save()
-        return response_data(message=SUCCESS['deleted_employee'])
+        return response_data(message=SUCCESS['deleted_employee'],data={'id':delete_data.id,'name':delete_data.name})
     
     def get_trash(self, request):
         queryset = Employee.objects.exclude(deleted_at__isnull=True)
