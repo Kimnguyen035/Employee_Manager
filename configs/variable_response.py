@@ -14,6 +14,7 @@ ERROR = {
     'not_exists_trash_emp': 'The employee does not exist in the trash.',
     'not_exists_phone': 'Numberphone does not exist.',
     'not_exists_trash_phone': 'The employee does not exist in the trash.',
+    'phone_failed': 'You entered the wrong phone number',
 }
 
 SUCCESS = {
