@@ -1,7 +1,17 @@
+# ========== include rest_framework ==========
 from rest_framework.viewsets import ViewSet
-from helpers.response import *
-from ..serializers.employee_serializer import *
-from ..validations.employee_validate import *
+# =============== end include  ===============
+
+# ================== include =================
 from datetime import datetime
+# =============== end include  ===============
+
+#               helpers
+from helpers.response import *
+#               validations
+from ..validations.employee_validate import *
 from ..validations.telephone_validate import *
+#               serializers
+from ..serializers.employee_serializer import *
+#               paginations
 from ..paginations import *
