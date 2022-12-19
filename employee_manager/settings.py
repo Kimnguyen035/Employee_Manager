@@ -44,12 +44,15 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     'DATE_INPUT_FORMATS': ['%d/%m/%Y', '%Y-%m-%d', '%d-%m-%Y', '%Y/%m/%d'],
     'DATETIME_INPUT_FORMATS': ['%Y-%m-%d %H:%M:%S', '%Y/%m/%d %H:%M:%S', '%d-%m-%Y %H:%M:%S', "%d/%m/%Y %H:%M:%S"],
+    'DATETIME_FORMAT':"%d-%m-%Y %H:%M:%S",
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
     ],
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.JSONParser',
     ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 2
 }
 
 MIDDLEWARE = [

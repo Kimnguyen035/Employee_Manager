@@ -3,8 +3,10 @@ from .views import *
 class EmployeeView(ViewSet):
     def get_all(self, request):
         queryset = Employee.objects.filter(deleted_at__isnull=True)
-        serializer = EmployeeSerializer(queryset, many=True)
-        return response_data(data=serializer.data)
+        paginator = StandardPagination()
+        pagination = paginator.paginate_queryset(queryset=queryset,request=request)
+        serializer = EmployeeSerializer(pagination, many=True)
+        return response_paginator(queryset.count(), paginator.page_size, data=serializer.data)
     
     def get_data(self, id):
         validate = IdGetEmployeeValidate(data={'id':id})

@@ -4,8 +4,7 @@ from configs.variable_response import *
 
 class IdGetEmployeeValidate(serializers.Serializer):
     id = serializers.IntegerField()
-    
-    # data = EmployeeSerializer(required=False, allow_null=False)
+    birthday = serializers.DateTimeField(allow_null=True,required=False)
     
     def validate(self, value):
         queryset = Employee.objects.filter(id=value['id'])

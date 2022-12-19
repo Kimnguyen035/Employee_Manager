@@ -4,3 +4,4 @@ from ..serializers.employee_serializer import *
 from ..validations.employee_validate import *
 from datetime import datetime
 from ..validations.telephone_validate import *
+from ..paginations import *
