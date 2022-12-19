@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from ..models.employee import Employee
 from ..models.telephone import Telephone
 from configs.variable_response import *
 

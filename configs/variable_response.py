@@ -9,9 +9,11 @@ STATUS = {
 }
 
 ERROR = {
-    'not_exists': ' does not exist',
+    'not_exists': 'does not exist',
     'not_exists_employee': 'Employee does not exist.',
-    'not_exists_trash': 'The employee does not exist in the trash.',
+    'not_exists_trash_emp': 'The employee does not exist in the trash.',
+    'not_exists_phone': 'Numberphone does not exist.',
+    'not_exists_trash_phone': 'The employee does not exist in the trash.',
 }
 
 SUCCESS = {
@@ -20,5 +22,9 @@ SUCCESS = {
     'deleted_employee': 'Employee was deleted',
     'restore_employee': 'Employee was restored',
     'drop_employee': 'Employee was dropped',
+    'create_phone':'Phone was created',
     'update_phone': 'Phone was updated',
+    'deleted_phone': 'Phone was deleted',
+    'restore_phone': 'Phone was restored',
+    'drop_phone': 'Phone was dropped',
 }
