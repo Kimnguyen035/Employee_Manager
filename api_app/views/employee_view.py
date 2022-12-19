@@ -5,34 +5,18 @@ class EmployeeView(ViewSet):
         queryset = Employee.objects.filter(deleted_at__isnull=True)
         paginator = StandardPagination()
         pagination = paginator.paginate_queryset(queryset=queryset,request=request)
-        serializer = EmployeeSerializer(pagination, many=True)
+        serializer = EmployeeSerializer(pagination, many=True, not_fields=['created_at','updated_at','deleted_at'])
         return response_paginator(queryset.count(), paginator.page_size, data=serializer.data)
-    
-    def get_data(self, id):
-        validate = IdGetEmployeeValidate(data={'id':id})
-        if not validate.is_valid():
-            return False, validate.errors
-        return True, validate.data['data']
     
     def get_detail(self, request, id):
         validate = IdGetEmployeeValidate(data={'id':id})
         if not validate.is_valid():
             return validate_error(validate.errors)
         queryset = Employee.objects.get(id=validate.data['id'])
+        if queryset.deleted_at is not None:
+            return response_data(ERROR['not_exists_employee'],STATUS['NO_DATA'])
         serializer = EmployeeSerializer(queryset)
         return response_data(data=serializer.data)
-    
-    # def create(self, request):
-    #     data = request.data.copy()
-    #     post_save = EmployeeSerializer(data=data)
-    #     if not post_save.is_valid():
-    #         return validate_error(post_save.errors)
-    #     data = post_save.data
-    #     for item in post_save:
-            
-        
-    #     post_save.save()
-    #     return self.get_detail(request=request, id=post_save.data['id'])
     
     def create(self, request):
         data = request.data.copy()
