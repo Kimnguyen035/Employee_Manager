@@ -42,8 +42,6 @@ class TelephoneView(ViewSet):
         if not validate.is_valid():
             return validate_error(validate.errors,STATUS['NO_DATA'])
         delete_data = Telephone.objects.get(id=validate.data['id'])
-        # if delete_data.deleted_at is not None:
-        #     return response_data(message=SUCCESS['not_exists_employee'], status=STATUS['NO_DATA'])
         delete_data.deleted_at = datetime.now()
         delete_data.save()
         return response_data(message=SUCCESS['deleted_phone'],data={'id':delete_data.id})
@@ -59,8 +57,6 @@ class TelephoneView(ViewSet):
         if not validate.is_valid():
             return validate_error(validate.errors,STATUS['NO_DATA'])
         restore_data = Telephone.objects.get(id=validate.data['id'])
-        # if restore_data.deleted_at is not None:
-        #     return response_data(message=SUCCESS['not_exists_trash'], status=STATUS['NO_DATA'])
         restore_data.deleted_at = None
         restore_data.save()
         serializer = TelephoneSerializer(restore_data)
