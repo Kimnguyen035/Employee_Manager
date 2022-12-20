@@ -16,10 +16,10 @@ class TelephoneView(ViewSet):
         phone = TelephoneSerializer(queryset)
         return response_data(data=phone.data)
     
-    def create_phone(self, request):
+    def add_phone(self, request):
         data = request.data.copy()
         post_save = TelephoneSerializer(data=data)
-        if not post_save.is_valid(): 
+        if not post_save.is_valid():
             return validate_error(post_save.errors)
         post_save.save()
         return response_data(message=SUCCESS['create_phone'],data=post_save.data)

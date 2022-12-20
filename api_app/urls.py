@@ -20,7 +20,7 @@ url_items = {
         path('get-all-phone', TelephoneView.as_view({'get':'all_phone'})),
         path('detail-phone/<int:id>', TelephoneView.as_view({'get':'detail_phone'})),
         path('get-trash-phone', TelephoneView.as_view({'get':'get_trash'})),
-        path('create-phone', TelephoneView.as_view({'post':'create_phone'})),
+        path('add-phone', TelephoneView.as_view({'post':'add_phone'})),
         path('edit-phone/<int:id>', TelephoneView.as_view({'put':'edit_phone'})),
         path('delete-phone/<int:id>', TelephoneView.as_view({'delete':'delete_phone'})),
         path('restore-phone/<int:id>', TelephoneView.as_view({'delete':'restore'})),
