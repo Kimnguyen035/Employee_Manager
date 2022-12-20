@@ -18,6 +18,7 @@ class ListTelephoneValidate(serializers.Serializer):
     
     def validate_phone_number(self, value):
         for item in value:
-            if item[:3] not in LIST_PHONE_VN or len(item) != 10:
+            phone = str(item)
+            if not phone.isnumeric() or phone[:3] not in LIST_PHONE_VN or len(phone) != 10:
                 raise serializers.ValidationError(ERROR['phone_failed'])
         return value
