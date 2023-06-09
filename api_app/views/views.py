@@ -4,6 +4,7 @@ from rest_framework.viewsets import ViewSet
 
 # ================== include =================
 from datetime import datetime
+import pandas as pd
 # =============== end include  ===============
 
 #               helpers

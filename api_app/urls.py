@@ -1,6 +1,7 @@
 from django.urls import path
 from .views.employee_view import *
 from .views.telephone_view import *
+from .views.excel_view import *
 
 url_items = {
     'url_employee': [
@@ -25,6 +26,9 @@ url_items = {
         path('delete-phone/<int:id>', TelephoneView.as_view({'delete':'delete_phone'})),
         path('restore-phone/<int:id>', TelephoneView.as_view({'delete':'restore'})),
         path('drop-phone/<int:id>', TelephoneView.as_view({'delete':'drop_phone'})),
+    ],
+    'url_phone': [
+        path('excel-convert-json', ExcelView.as_view({'get':'excel_convert_json'})),
     ]
 }
 
